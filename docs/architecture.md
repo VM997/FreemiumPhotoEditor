@@ -1,7 +1,7 @@
 # 🧩 Architecture Overview
 
-**Project:** Freemium Photo Editor
-**Owner:** Michael Villasfer
+**Project:** Freemium Photo Editor\
+**Owner:** Michael Villasfer\
 **Goal:** Showcase clean architecture, testing discipline, and DevOps mindset — not just a working image editor.
 
 ---
