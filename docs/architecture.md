@@ -26,10 +26,10 @@ The project follows a **Clean Architecture** pattern:
 ---
 
 ## 3. Data Flow
-+-----------------------+
++-----------------------+␣␣ _
 | User Interface |
 | (Editor.App - UI) |
-+-----------+-----------+
++-----------+-----------+_
 |
 | 1️⃣ User triggers an operation
 v
@@ -102,7 +102,7 @@ Image → Operation (Crop / Rotate / Adjust / B&W)
 ---
 
 ## 8. Example File Tree
-editor-fotos-freemium/
+FreemiumPhotoEditor/
 ├── src/
 │ ├── Editor.App/
 │ │ ├── MainWindow.xaml
