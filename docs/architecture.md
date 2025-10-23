@@ -26,7 +26,6 @@ The project follows a **Clean Architecture** pattern:
 ---
 
 ## 3. Data Flow
-
 | 1️⃣ User triggers an operation |
 |-------------------------------|
 | Core Engine | 
@@ -39,7 +38,6 @@ The project follows a **Clean Architecture** pattern:
 | --------------------------------|
 | Display / Preview |
 | (UI re-renders image) |
-
 
 ---
 
@@ -94,7 +92,7 @@ Image → Operation (Crop / Rotate / Adjust / B&W)
 
 ---
 
-## 8. Example File Tree
+## 8. Example File Treea
 <pre>
 FreemiumPhotoEditor/
 ├── src/
