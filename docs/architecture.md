@@ -1,7 +1,7 @@
 # 🧩 Architecture Overview
 
-**Project:** Freemium Photo Editor
-**Owner:** Michael Villasfer
+**Project:** Freemium Photo Editor\
+**Owner:** Michael Villasfer\
 **Goal:** Showcase clean architecture, testing discipline, and DevOps mindset — not just a working image editor.
 
 ---
@@ -26,27 +26,20 @@ The project follows a **Clean Architecture** pattern:
 ---
 
 ## 3. Data Flow
-+-----------------------+
-| User Interface |
-| (Editor.App - UI) |
-+-----------+-----------+
-|
-| 1️⃣ User triggers an operation
-v
-+-----------------------+
-| Core Engine |
+
+| 1️⃣ User triggers an operation |
+|-------------------------------|
+| Core Engine | 
 | (Editor.Core) |
 | - Validates params |
 | - Applies operation |
 | - Updates history |
-+-----------+-----------+
-|
-| 2️⃣ Resulting image (in-memory)
-v
-+-----------------------+
+
+|2️⃣ Resulting image (in-memory)|
+| --------------------------------|
 | Display / Preview |
 | (UI re-renders image) |
-+-----------------------+
+
 
 ---
 
@@ -102,27 +95,28 @@ Image → Operation (Crop / Rotate / Adjust / B&W)
 ---
 
 ## 8. Example File Tree
+<pre>
 editor-fotos-freemium/
 ├── src/
-│ ├── Editor.App/
-│ │ ├── MainWindow.xaml
-│ │ ├── Commands/
-│ │ └── ViewModels/
-│ └── Editor.Core/
-│ ├── Operations/
-│ ├── Models/
-│ └── Services/
+│   ├── Editor.App/
+│   │   ├── MainWindow.xaml
+│   │   ├── Commands/
+│   │   └── ViewModels/
+│   └── Editor.Core/
+│       ├── Operations/
+│       ├── Models/
+│       └── Services/
 ├── tests/
-│ └── Editor.Core.Tests/
-│ ├── Golden/
-│ └── Unit/
+│   └── Editor.Core.Tests/
+│       ├── Golden/
+│       └── Unit/
 ├── docs/
-│ ├── scope.md
-│ └── arquitectura.md
+│   ├── scope.md
+│   └── arquitectura.md
 └── .github/
-├── ISSUE_TEMPLATE/
-└── PULL_REQUEST_TEMPLATE.md
-
+    ├── ISSUE_TEMPLATE/
+    └── PULL_REQUEST_TEMPLATE.md
+</pre>
 
 ---
 
