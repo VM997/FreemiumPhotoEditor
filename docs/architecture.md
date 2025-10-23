@@ -96,7 +96,7 @@ Image → Operation (Crop / Rotate / Adjust / B&W)
 
 ## 8. Example File Tree
 <pre>
-editor-fotos-freemium/
+FreemiumPhotoEditor/
 ├── src/
 │   ├── Editor.App/
 │   │   ├── MainWindow.xaml
