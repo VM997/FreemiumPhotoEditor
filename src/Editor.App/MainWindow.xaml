@@ -8,6 +8,16 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="False">
+        <WindowChrome.WindowChrome>
+          <WindowChrome
+              CaptionHeight="48"
+              ResizeBorderThickness="10"
+              GlassFrameThickness="0"
+              CornerRadius="0"
+              UseAeroCaptionButtons="True" />
+        </WindowChrome.WindowChrome>
+
+        
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="48"/>
@@ -18,7 +28,7 @@
     <Border Grid.Row="0"
             Style="{DynamicResource TopBarBorder}"
             MouseLeftButtonDown="TopBar_MouseLeftButtonDown">
-      <Grid>
+      <Grid x:Name="TitleBar" Height="32" Background="Transparent">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="*"/>
@@ -28,12 +38,13 @@
         <!-- Izquierda: acciones principales -->
         <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
           <Button x:Name="OpenBtn"
+                  WindowChrome.IsHitTestVisibleInChrome="True"
                   Style="{DynamicResource AccentCommandButtonStyle}"
                   Click="Open_Click"
                   ToolTipService.ToolTip="Open image"
                   Margin="0,0,8,0"
                   Width="65"
-                  Height="36">
+                  Height="30">
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
               <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" Margin="0,0,6,0" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
@@ -41,14 +52,16 @@
             </StackPanel>
           </Button>
 
-          <Button x:Name="UndoBtn"
+          <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                  x:Name="UndoBtn"
                   Style="{DynamicResource TopBarIconButtonStyle}"
                   Click="Undo_Click"
                   ToolTipService.ToolTip="Undo"
                   Margin="0,0,4,0">
             <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE7A6;"/>
           </Button>
-          <Button x:Name="RedoBtn"
+          <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                  x:Name="RedoBtn"
                   Style="{DynamicResource TopBarIconButtonStyle}"
                   Click="Redo_Click"
                   ToolTipService.ToolTip="Redo">
@@ -57,7 +70,8 @@
         </StackPanel>
 
         <!-- Centro: título del documento -->
-        <TextBlock x:Name="DocumentTitle"
+        <TextBlock WindowChrome.IsHitTestVisibleInChrome="True"
+                   x:Name="DocumentTitle"
                    Grid.Column="1"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -68,24 +82,28 @@
 
         <!-- Derecha: tema + controles de ventana -->
         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,4,0">
-          <Button Style="{DynamicResource TopBarIconButtonStyle}"
+          <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                  Style="{DynamicResource TopBarIconButtonStyle}"
                   Click="OnToggleThemeClick"
                   ToolTipService.ToolTip="Toggle light/dark"
                   Margin="0,0,4,0">
             <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE793;"/>
           </Button>
-          <Button Style="{DynamicResource WindowControlButtonStyle}"
+          <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                  Style="{DynamicResource WindowControlButtonStyle}"
                   Click="Minimize_Click"
                   ToolTipService.ToolTip="Minimize"
                   Content="&#xE921;"
                   Margin="0,0,2,0"/>
-          <Button x:Name="MaximizeRestoreBtn"
+          <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                  x:Name="MaximizeRestoreBtn"
                   Style="{DynamicResource WindowControlButtonStyle}"
                   Click="MaximizeRestore_Click"
                   ToolTipService.ToolTip="Maximize"
                   Content="&#xE922;"
                   Margin="0,0,2,0"/>
-          <Button Style="{DynamicResource WindowCloseButtonStyle}"
+          <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                  Style="{DynamicResource WindowCloseButtonStyle}"
                   Click="Close_Click"
                   ToolTipService.ToolTip="Close"
                   Content="&#xE8BB;"/>

@@ -88,7 +88,7 @@
         <ControlTemplate TargetType="Button">
           <Border x:Name="bd"
                   Background="{TemplateBinding Background}"
-                  CornerRadius="6">
+                  CornerRadius="8">
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
           <ControlTemplate.Triggers>
