@@ -16,9 +16,30 @@
       <DockPanel LastChildFill="True">
         <!-- Izquierda: acciones -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="8,0">
-          <Button x:Name="OpenBtn"  Click="Open_Click"  Margin="4,0">Open</Button>
-          <Button x:Name="UndoBtn"  Click="Undo_Click"  Margin="4,0">Undo</Button>
-          <Button x:Name="RedoBtn"  Click="Redo_Click"  Margin="4,0">Redo</Button>
+          <Button x:Name="OpenBtn"
+                  Click="Open_Click"
+                  Margin="4,0"
+                  Padding="8"
+                  FontFamily="Segoe MDL2 Assets"
+                  FontSize="16"
+                  ToolTipService.ToolTip="Open"
+                  Content="&#xE838;"/>
+          <Button x:Name="UndoBtn"
+                  Click="Undo_Click"
+                  Margin="4,0"
+                  Padding="8"
+                  FontFamily="Segoe MDL2 Assets"
+                  FontSize="16"
+                  ToolTipService.ToolTip="Undo"
+                  Content="&#xE7A6;"/>
+          <Button x:Name="RedoBtn"
+                  Click="Redo_Click"
+                  Margin="4,0"
+                  Padding="8"
+                  FontFamily="Segoe MDL2 Assets"
+                  FontSize="16"
+                  ToolTipService.ToolTip="Redo"
+                  Content="&#xE7A7;"/>
         </StackPanel>
 
         <!-- Centro: título 
@@ -28,7 +49,13 @@
         
         <!-- Derecha: tema + controles ventana -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,8,0">
-          <Button Click="OnToggleThemeClick" Margin="4,0">Toggle theme</Button>
+          <Button Click="OnToggleThemeClick"
+                  Margin="4,0"
+                  Padding="8"
+                  FontFamily="Segoe MDL2 Assets"
+                  FontSize="16"
+                  ToolTipService.ToolTip="Toggle theme"
+                  Content="&#xE793;"/>
         </StackPanel>
       </DockPanel>
     </Border>
