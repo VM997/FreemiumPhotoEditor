@@ -1,16 +1,56 @@
 ﻿<Window x:Class="Editor.App.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FREEMIUM PHOTO EDITOR" Height="600" Width="900">
-    <DockPanel>
-        <ToolBar DockPanel.Dock="Top">
-            <Button Name="OpenBtn" Content="Open" Click="Open_Click"/>
-            <Separator/>
-            <Button Name="UndoBtn" Content="Undo" Click="Undo_Click" IsEnabled="False"/>
-            <Button Name="RedoBtn" Content="Redo" Click="Redo_Click" IsEnabled="False"/>
-        </ToolBar>
-        <ScrollViewer>
-            <Image Name="Preview" Stretch="Uniform"/>
-        </ScrollViewer>
-    </DockPanel>
+        Title="Freemium Photo Editor"
+        Width="1200" Height="800"
+        Background="{StaticResource Color.Background}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="48"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Barra superior -->
+    <Border Grid.Row="0" Style="{StaticResource TopBarBorder}">
+      <DockPanel LastChildFill="True">
+        <TextBlock Text="Freemium Photo Editor"
+                   Margin="12,0"
+                   VerticalAlignment="Center"
+                   FontWeight="SemiBold"/>
+      </DockPanel>
+    </Border>
+
+    <!-- Contenido principal -->
+    <Grid Grid.Row="1" Background="{StaticResource Color.Background}">
+      <!-- Aquí tu viewer / imagen / controles -->
+    </Grid>
+  </Grid>
+</Window>
+<Window x:Class="Editor.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Freemium Photo Editor"
+        Width="1200" Height="800"
+        Background="{StaticResource Color.Background}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="48"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Barra superior -->
+    <Border Grid.Row="0" Style="{StaticResource TopBarBorder}">
+      <DockPanel LastChildFill="True">
+        <TextBlock Text="Freemium Photo Editor"
+                   Margin="12,0"
+                   VerticalAlignment="Center"
+                   FontWeight="SemiBold"/>
+      </DockPanel>
+    </Border>
+
+    <!-- Contenido principal -->
+    <Grid Grid.Row="1" Background="{StaticResource Color.Background}">
+      <!-- Aquí tu viewer / imagen / controles -->
+    </Grid>
+  </Grid>
 </Window>
