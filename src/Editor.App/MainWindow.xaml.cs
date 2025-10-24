@@ -1,18 +1,19 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Editor.Core.History;
 using Editor.Core.Models;
-using System.Windows.Interop;                 
-using Editor.App.Interop;                    
+using System.Windows.Interop;
+using Editor.App.Interop;
 
 namespace Editor.App
 {
     public partial class MainWindow : Window
     {
-        private HistoryManager _history;
+        private readonly HistoryManager _history;
+        private string? _currentFilePath;
 
         public MainWindow()
         {
@@ -28,6 +29,10 @@ namespace Editor.App
             var empty = new byte[] { 0, 0, 0, 0 };
             _history = new HistoryManager(new ImageState(empty, 1, 1));
             UpdateButtons();
+            UpdateDocumentTitle();
+            UpdateMaximizeIcon();
+
+            StateChanged += (_, __) => UpdateMaximizeIcon();
         }
 
 
@@ -47,7 +52,9 @@ namespace Editor.App
 
             Preview.Source = bmp;
             _history.Push(new ImageState(bytes, bmp.PixelWidth, bmp.PixelHeight));
+            _currentFilePath = dlg.FileName;
             UpdateButtons();
+            UpdateDocumentTitle();
         }
 
         private void Undo_Click(object sender, RoutedEventArgs e)
@@ -65,9 +72,48 @@ namespace Editor.App
             UndoBtn.IsEnabled = _history.CanUndo;
             RedoBtn.IsEnabled = _history.CanRedo;
         }
+
+        private void UpdateDocumentTitle()
+        {
+            var displayName = string.IsNullOrEmpty(_currentFilePath)
+                ? "Freemium Photo Editor"
+                : Path.GetFileName(_currentFilePath);
+
+            DocumentTitle.Text = displayName;
+            Title = string.IsNullOrEmpty(_currentFilePath)
+                ? "Freemium Photo Editor"
+                : $"{displayName} - Freemium Photo Editor";
+        }
+
         private void OnToggleThemeClick(object sender, RoutedEventArgs e)
         {
             ThemeManager.Toggle();
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeRestore_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized
+                ? WindowState.Normal
+                : WindowState.Maximized;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void UpdateMaximizeIcon()
+        {
+            if (MaximizeRestoreBtn is null) return;
+
+            var isMaximized = WindowState == WindowState.Maximized;
+            MaximizeRestoreBtn.Content = isMaximized ? "\uE923" : "\uE922";
+            MaximizeRestoreBtn.ToolTip = isMaximized ? "Restore" : "Maximize";
         }
 
         private void TopBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
