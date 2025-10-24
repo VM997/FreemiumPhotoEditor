@@ -31,12 +31,16 @@
                   Style="{DynamicResource AccentCommandButtonStyle}"
                   Click="Open_Click"
                   ToolTipService.ToolTip="Open image"
-                  Margin="0,0,8,0">
+                  Margin="0,0,8,0"
+                  Width="65"
+                  Height="36">
+
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" Margin="0,0,6,0"/>
-              <TextBlock Text="Open" FontWeight="SemiBold"/>
+              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" Margin="0,0,6,0" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+              <TextBlock Text="New" FontWeight="SemiBold" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
             </StackPanel>
           </Button>
+
           <Button x:Name="UndoBtn"
                   Style="{DynamicResource TopBarIconButtonStyle}"
                   Click="Undo_Click"

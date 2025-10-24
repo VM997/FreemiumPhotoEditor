@@ -1,23 +1,25 @@
-# Build folders
+ni .gitignore -Force | Out-Null
+@"
+# Build artifacts
 bin/
 obj/
 
-# Visual Studio / VS Code
+# VS / VS Code
 .vs/
 *.user
 *.suo
 
-# System
-Thumbs.db
-Desktop.ini
-
-# NuGet
+# NuGet & logs
 *.nupkg
 *.snupkg
 packages/
 *.nuget.props
 *.nuget.targets
 project.lock.json
-
-# Logs
 *.log
+
+# OS noise
+Thumbs.db
+Desktop.ini
+"@ | Set-Content .gitignore -Encoding UTF8
+

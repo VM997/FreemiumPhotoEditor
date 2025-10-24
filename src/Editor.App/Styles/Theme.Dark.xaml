@@ -79,7 +79,7 @@
 
   <!-- Botón destacado (Open) -->
   <Style x:Key="AccentCommandButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-    <Setter Property="Foreground" Value="{DynamicResource Brush.CommandAccentForeground}"/>
+    <Setter Property="Foreground" Value="Black"/>
     <Setter Property="Background" Value="{DynamicResource Brush.CommandAccent}"/>
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.CommandAccent}"/>
     <Setter Property="Padding" Value="18,8"/>
@@ -88,7 +88,7 @@
         <ControlTemplate TargetType="Button">
           <Border x:Name="bd"
                   Background="{TemplateBinding Background}"
-                  CornerRadius="20">
+                  CornerRadius="6">
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
           <ControlTemplate.Triggers>
