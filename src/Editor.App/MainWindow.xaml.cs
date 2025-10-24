@@ -22,20 +22,26 @@ namespace Editor.App
             SourceInitialized += (_, __) =>
             {
                 var hwnd = new WindowInteropHelper(this).Handle;
-                DwmApi.SetImmersiveDarkMode(hwnd, true); // título oscuro
-                DwmApi.SetSystemBackdropMica(hwnd);      // Mica en la barra (como Fotos)
-                DwmApi.SetRoundedCorners(hwnd, small:false); // esquinas redondeadas
+                DwmApi.SetImmersiveDarkMode(hwnd, true);        // título oscuro
+                DwmApi.SetSystemBackdropMica(hwnd);             // Mica en la barra (como Fotos)
+                DwmApi.SetRoundedCorners(hwnd, small: false);   // esquinas redondeadas
             };
+
+            // Historial inicial con un estado vacío
             var empty = new byte[] { 0, 0, 0, 0 };
             _history = new HistoryManager(new ImageState(empty, 1, 1));
-            UpdateButtons();
+
+            UpdateUI();
             UpdateDocumentTitle();
             UpdateMaximizeIcon();
 
             StateChanged += (_, __) => UpdateMaximizeIcon();
         }
 
+        // === Estado derivado ===
+        private bool HasImage => Preview?.Source != null;
 
+        // === Abrir imagen ===
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new OpenFileDialog { Filter = "Images|*.png;*.jpg;*.jpeg" };
@@ -51,26 +57,71 @@ namespace Editor.App
             bmp.Freeze();
 
             Preview.Source = bmp;
+
+            // Empujamos el estado base de la imagen al historial
             _history.Push(new ImageState(bytes, bmp.PixelWidth, bmp.PixelHeight));
+
             _currentFilePath = dlg.FileName;
-            UpdateButtons();
+
+            UpdateUI();
             UpdateDocumentTitle();
         }
 
+        // === Editar (placeholder) ===
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (!HasImage) return;
+
+            // Aquí iría tu lógica de edición (brillo, rotación, B&N, etc.)
+            // Al finalizar, mete el nuevo estado en el historial:
+            // var (bytes,width,height) = RenderOrGetCurrentImageState();
+            // _history.Push(new ImageState(bytes, width, height));
+
+            UpdateUI();
+        }
+
+        // === Undo / Redo ===
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
-            if (_history.CanUndo) { _history.Undo(); UpdateButtons(); }
+            if (_history.CanUndo)
+            {
+                _history.Undo();
+
+                // TODO: si tu HistoryManager expone el estado actual, rehidrátalo:
+                // var state = _history.Current;
+                // Preview.Source = BytesToBitmapImage(state.Bytes);
+
+                UpdateUI();
+            }
         }
 
         private void Redo_Click(object sender, RoutedEventArgs e)
         {
-            if (_history.CanRedo) { _history.Redo(); UpdateButtons(); }
+            if (_history.CanRedo)
+            {
+                _history.Redo();
+
+                // TODO: rehidratar imagen si procede:
+                // var state = _history.Current;
+                // Preview.Source = BytesToBitmapImage(state.Bytes);
+
+                UpdateUI();
+            }
         }
 
-        private void UpdateButtons()
+        // === UI state ===
+        private void UpdateUI()
         {
-            UndoBtn.IsEnabled = _history.CanUndo;
-            RedoBtn.IsEnabled = _history.CanRedo;
+            var hasImage = HasImage;
+
+            // Mostrar/ocultar botones según si hay imagen
+            if (EditBtn != null)  EditBtn.Visibility  = hasImage ? Visibility.Visible : Visibility.Collapsed;
+            if (UndoBtn != null)  UndoBtn.Visibility  = hasImage ? Visibility.Visible : Visibility.Collapsed;
+            if (RedoBtn != null)  RedoBtn.Visibility  = hasImage ? Visibility.Visible : Visibility.Collapsed;
+
+            // Habilitar undo/redo sólo con imagen y si el historial lo permite
+            if (UndoBtn != null)  UndoBtn.IsEnabled   = hasImage && _history.CanUndo;
+            if (RedoBtn != null)  RedoBtn.IsEnabled   = hasImage && _history.CanRedo;
         }
 
         private void UpdateDocumentTitle()
@@ -127,6 +178,19 @@ namespace Editor.App
             {
                 DragMove(); // arrastrar la ventana
             }
+        }
+
+        // Helper opcional si quieres rehidratar desde bytes:
+        private static BitmapImage BytesToBitmapImage(byte[] bytes)
+        {
+            using var ms = new MemoryStream(bytes);
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.StreamSource = ms;
+            bmp.EndInit();
+            bmp.Freeze();
+            return bmp;
         }
     }
 }

@@ -8,16 +8,22 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         AllowsTransparency="False">
-        <WindowChrome.WindowChrome>
-          <WindowChrome
-              CaptionHeight="48"
-              ResizeBorderThickness="10"
-              GlassFrameThickness="0"
-              CornerRadius="0"
-              UseAeroCaptionButtons="True" />
-        </WindowChrome.WindowChrome>
 
-        
+  <!-- WindowChrome tal cual lo tenías -->
+  <WindowChrome.WindowChrome>
+    <WindowChrome
+        CaptionHeight="48"
+        ResizeBorderThickness="10"
+        GlassFrameThickness="0"
+        CornerRadius="0"
+        UseAeroCaptionButtons="True" />
+  </WindowChrome.WindowChrome>
+
+  <!-- === Recursos === -->
+  <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+  </Window.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="48"/>
@@ -37,34 +43,64 @@
 
         <!-- Izquierda: acciones principales -->
         <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
+
+          <!-- Open: siempre visible -->
           <Button x:Name="OpenBtn"
                   WindowChrome.IsHitTestVisibleInChrome="True"
                   Style="{DynamicResource AccentCommandButtonStyle}"
                   Click="Open_Click"
                   ToolTipService.ToolTip="Open image"
                   Margin="0,0,8,0"
-                  Width="65"
+                  Width="80"
                   Height="30">
-
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" Margin="0,0,6,0" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
-              <TextBlock Text="New" FontWeight="SemiBold" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" Margin="0,0,6,0"
+                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+              <TextBlock Text="Open" FontWeight="SemiBold"
+                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
             </StackPanel>
           </Button>
 
+          <!-- Edit: sólo si hay imagen -->
+          <Button x:Name="EditBtn"
+                  WindowChrome.IsHitTestVisibleInChrome="True"
+                  Style="{DynamicResource AccentCommandButtonStyle}"
+                  Click="Edit_Click"
+                  ToolTipService.ToolTip="Edit image"
+                  Margin="0,0,8,0"
+                  Width="80"
+                  Height="30"
+                  Visibility="Collapsed"> <!-- arranca oculto -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+              <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70F;" Margin="0,0,6,0"
+                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+              <TextBlock Text="Edit" FontWeight="SemiBold"
+                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            </StackPanel>
+          </Button>
+
+          <!-- Separador opcional -->
+          <Separator Width="1" Margin="0,0,8,0" />
+
+          <!-- Undo/Redo: ocultos si no hay imagen; habilitados según historial -->
           <Button WindowChrome.IsHitTestVisibleInChrome="True"
                   x:Name="UndoBtn"
                   Style="{DynamicResource TopBarIconButtonStyle}"
                   Click="Undo_Click"
                   ToolTipService.ToolTip="Undo"
-                  Margin="0,0,4,0">
+                  Margin="0,0,4,0"
+                  Visibility="{Binding HasImage, Converter={StaticResource BoolToVis}}"
+                  IsEnabled="{Binding CanUndo}">
             <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE7A6;"/>
           </Button>
+
           <Button WindowChrome.IsHitTestVisibleInChrome="True"
                   x:Name="RedoBtn"
                   Style="{DynamicResource TopBarIconButtonStyle}"
                   Click="Redo_Click"
-                  ToolTipService.ToolTip="Redo">
+                  ToolTipService.ToolTip="Redo"
+                  Visibility="{Binding HasImage, Converter={StaticResource BoolToVis}}"
+                  IsEnabled="{Binding CanRedo}">
             <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xE7A7;"/>
           </Button>
         </StackPanel>
