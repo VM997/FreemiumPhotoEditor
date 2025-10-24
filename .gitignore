@@ -1,0 +1,23 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.suo
+
+# System
+Thumbs.db
+Desktop.ini
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+
+# Logs
+*.log
