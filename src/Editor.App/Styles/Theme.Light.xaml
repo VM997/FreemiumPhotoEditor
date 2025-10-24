@@ -1,27 +1,197 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <!-- Colores -->
-  <SolidColorBrush x:Key="Color.Background" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="Color.Surface"    Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="Color.Text"       Color="#1A1A1A"/>
-  <SolidColorBrush x:Key="Color.ButtonBg"   Color="#F2F2F2"/>
-  <SolidColorBrush x:Key="Color.ButtonBorder" Color="#D0D0D0"/>
+  <!-- Fondo principal -->
+  <LinearGradientBrush x:Key="Brush.AppBackground" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Color="#F8F8FB" Offset="0.00"/>
+    <GradientStop Color="#F8F8FB" Offset="0.55"/>
+    <GradientStop Color="#FFFFFF" Offset="1.00"/>
+  </LinearGradientBrush>
 
-  <!-- Estilos -->
+  <!-- Colores base -->
+  <SolidColorBrush x:Key="Color.Text" Color="#1A1A1F"/>
+  <SolidColorBrush x:Key="Brush.TopBarBackground" Color="#F2F2F7"/>
+  <SolidColorBrush x:Key="Color.ButtonBg" Color="#E8E8F2"/>
+  <SolidColorBrush x:Key="Color.ButtonHover" Color="#DFDFF0"/>
+  <SolidColorBrush x:Key="Color.ButtonPressed" Color="#D4D4E6"/>
+  <SolidColorBrush x:Key="Color.ButtonDisabledBg" Color="#EEEEF5"/>
+  <SolidColorBrush x:Key="Color.ButtonDisabledFg" Color="#9FA0B4"/>
+  <SolidColorBrush x:Key="Color.ButtonBorder" Color="#D3D3E1"/>
+
+  <!-- Comandos acento -->
+  <SolidColorBrush x:Key="Brush.CommandAccent" Color="#EEDCFF"/>
+  <SolidColorBrush x:Key="Brush.CommandAccentHover" Color="#E2C9FF"/>
+  <SolidColorBrush x:Key="Brush.CommandAccentPressed" Color="#D2B0FF"/>
+  <SolidColorBrush x:Key="Brush.CommandAccentForeground" Color="#36225F"/>
+
+  <!-- Botones barra superior -->
+  <SolidColorBrush x:Key="Brush.WindowButtonHover" Color="#E4E4EC"/>
+  <SolidColorBrush x:Key="Brush.WindowButtonPressed" Color="#D7D7E2"/>
+  <SolidColorBrush x:Key="Brush.WindowCloseHover" Color="#E81123"/>
+  <SolidColorBrush x:Key="Brush.WindowClosePressed" Color="#C50F1F"/>
+  <SolidColorBrush x:Key="Brush.WindowCloseForeground" Color="#FFFFFF"/>
+
+  <!-- Top bar -->
   <Style x:Key="TopBarBorder" TargetType="Border">
-    <Setter Property="Background" Value="{DynamicResource Color.Surface}"/>
+    <Setter Property="Background" Value="{DynamicResource Brush.TopBarBackground}"/>
     <Setter Property="Height" Value="48"/>
     <Setter Property="SnapsToDevicePixels" Value="True"/>
   </Style>
 
+  <!-- Tipografía -->
   <Style TargetType="TextBlock">
     <Setter Property="Foreground" Value="{DynamicResource Color.Text}"/>
   </Style>
 
+  <!-- Estilo base de botones -->
   <Style TargetType="Button">
     <Setter Property="Foreground" Value="{DynamicResource Color.Text}"/>
     <Setter Property="Background" Value="{DynamicResource Color.ButtonBg}"/>
     <Setter Property="BorderBrush" Value="{DynamicResource Color.ButtonBorder}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Padding" Value="10,6"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="bd"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="6">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Color.ButtonHover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Color.ButtonPressed}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Color.ButtonDisabledBg}"/>
+              <Setter Property="Foreground" Value="{DynamicResource Color.ButtonDisabledFg}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Botón destacado (Open) -->
+  <Style x:Key="AccentCommandButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Foreground" Value="{DynamicResource Brush.CommandAccentForeground}"/>
+    <Setter Property="Background" Value="{DynamicResource Brush.CommandAccent}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.CommandAccent}"/>
+    <Setter Property="Padding" Value="18,8"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="bd"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="20">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Brush.CommandAccentHover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Brush.CommandAccentPressed}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="bd" Property="Opacity" Value="0.45"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Icon buttons (Undo/Redo/Theme) -->
+  <Style x:Key="TopBarIconButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Width" Value="36"/>
+    <Setter Property="Height" Value="32"/>
+    <Setter Property="Padding" Value="0"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="Background" Value="{DynamicResource Color.ButtonBg}"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="bd"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="10">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Color.ButtonHover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Color.ButtonPressed}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="bd" Property="Opacity" Value="0.35"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Botones de la ventana -->
+  <Style x:Key="WindowControlButtonStyle" TargetType="Button">
+    <Setter Property="Width" Value="46"/>
+    <Setter Property="Height" Value="32"/>
+    <Setter Property="Padding" Value="0"/>
+    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="Foreground" Value="{DynamicResource Color.Text}"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="bd" Background="{TemplateBinding Background}">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Brush.WindowButtonHover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Brush.WindowButtonPressed}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="WindowCloseButtonStyle" TargetType="Button">
+    <Setter Property="Width" Value="46"/>
+    <Setter Property="Height" Value="32"/>
+    <Setter Property="Padding" Value="0"/>
+    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="Foreground" Value="{DynamicResource Brush.WindowCloseForeground}"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="bd" Background="{TemplateBinding Background}">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Brush.WindowCloseHover}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="bd" Property="Background" Value="{DynamicResource Brush.WindowClosePressed}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 </ResourceDictionary>
