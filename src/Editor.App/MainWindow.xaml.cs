@@ -5,6 +5,8 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Editor.Core.History;
 using Editor.Core.Models;
+using System.Windows.Interop;                 
+using Editor.App.Interop;                    
 
 namespace Editor.App
 {
@@ -16,10 +18,18 @@ namespace Editor.App
         {
             InitializeComponent();
 
+            SourceInitialized += (_, __) =>
+            {
+                var hwnd = new WindowInteropHelper(this).Handle;
+                DwmApi.SetImmersiveDarkMode(hwnd, true); // título oscuro
+                DwmApi.SetSystemBackdropMica(hwnd);      // Mica en la barra (como Fotos)
+                DwmApi.SetRoundedCorners(hwnd, small:false); // esquinas redondeadas
+            };
             var empty = new byte[] { 0, 0, 0, 0 };
             _history = new HistoryManager(new ImageState(empty, 1, 1));
             UpdateButtons();
         }
+
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -54,6 +64,23 @@ namespace Editor.App
         {
             UndoBtn.IsEnabled = _history.CanUndo;
             RedoBtn.IsEnabled = _history.CanRedo;
+        }
+        private void OnToggleThemeClick(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.Toggle();
+        }
+
+        private void TopBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                // Doble clic para maximizar/restaurar
+                WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            }
+            else
+            {
+                DragMove(); // arrastrar la ventana
+            }
         }
     }
 }

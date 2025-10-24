@@ -1,16 +1,42 @@
 ﻿<Window x:Class="Editor.App.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FREEMIUM PHOTO EDITOR" Height="600" Width="900">
-    <DockPanel>
-        <ToolBar DockPanel.Dock="Top">
-            <Button Name="OpenBtn" Content="Open" Click="Open_Click"/>
-            <Separator/>
-            <Button Name="UndoBtn" Content="Undo" Click="Undo_Click" IsEnabled="False"/>
-            <Button Name="RedoBtn" Content="Redo" Click="Redo_Click" IsEnabled="False"/>
-        </ToolBar>
-        <ScrollViewer>
-            <Image Name="Preview" Stretch="Uniform"/>
-        </ScrollViewer>
-    </DockPanel>
+        Title="Freemium Photo Editor"
+        Width="1200" Height="800"
+        Background="{DynamicResource Brush.AppBackground}"
+        UseLayoutRounding="True">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="48"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Top bar personalizada con mismo fondo -->
+    <Border Grid.Row="0" Style="{DynamicResource TopBarBorder}">
+      <DockPanel LastChildFill="True">
+        <!-- Izquierda: acciones -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="8,0">
+          <Button x:Name="OpenBtn"  Click="Open_Click"  Margin="4,0">Open</Button>
+          <Button x:Name="UndoBtn"  Click="Undo_Click"  Margin="4,0">Undo</Button>
+          <Button x:Name="RedoBtn"  Click="Redo_Click"  Margin="4,0">Redo</Button>
+        </StackPanel>
+
+        <!-- Centro: título 
+        <TextBlock Text="Freemium Photo Editor" VerticalAlignment="Center"
+                   FontWeight="SemiBold" Opacity="0.9" />
+        -->
+        
+        <!-- Derecha: tema + controles ventana -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+          <Button Click="OnToggleThemeClick" Margin="4,0">Toggle theme</Button>
+        </StackPanel>
+      </DockPanel>
+    </Border>
+
+    <!-- Contenido -->
+    <Grid Grid.Row="1" Background="{DynamicResource Brush.AppBackground}">
+      <Image x:Name="Preview" Stretch="Uniform"
+             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+  </Grid>
 </Window>
